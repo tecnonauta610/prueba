@@ -7,22 +7,23 @@
         document.addEventListener('DOMContentLoaded', function() {
             Backendless.initApp("ABADD98B-43DA-4DF4-8822-050BD3F60BB5", "9003D5A0-0023-468C-8861-3AC9EF139C14");
 
-            document.getElementById('scoreForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                enviarPuntuacion();
-            });
-
             function enviarPuntuacion() {
                 var playerName = document.getElementById('playerName').value;
-                var score = document.getElementById('score').value;
+                var score = parseFloat(document.getElementById('score').value);
                 Backendless.Data.of("Gamercu").save({ player_name: playerName, score: score })
                     .then(function(savedObject) {
                         alert("Puntuación guardada: " + savedObject.player_name + " - " + savedObject.score);
                     })
                     .catch(function(error) {
+                        console.error("Error al guardar la puntuación:", error);
                         alert("Error al guardar la puntuación: " + error.message);
                     });
             }
+
+            document.getElementById('scoreForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                enviarPuntuacion();
+            });
         });
     </script>
 </head>
