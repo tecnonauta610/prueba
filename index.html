@@ -14,25 +14,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backendless/6.2.1/backendless.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            Backendless.initApp("ABADD98B-43DA-4DF4-8822-050BD3F60BB5", "9003D5A0-0023-468C-8861-3AC9EF139C14");
+            console.log("Documento cargado");
+
+            try {
+                Backendless.initApp("ABADD98B-43DA-4DF4-8822-050BD3F60BB5", "546EFAA9-82F4-4B69-8102-AF0C608DCC5B");
+                console.log("Backendless inicializado correctamente");
+            } catch (error) {
+                console.error("Error al inicializar Backendless:", error);
+            }
 
             function registrarUsuario() {
-                var username = document.getElementById('username').value;
-                var email = document.getElementById('email').value;
-                var password = document.getElementById('password').value;
-
+                console.log("Intentando registrar usuario...");
                 var user = new Backendless.User();
-                user.username = username;
-                user.email = email;
-                user.password = password;
+                user.setProperty("user", document.getElementById('user').value);
+                user.setProperty("email", document.getElementById('email').value);
+                user.setProperty("password", document.getElementById('password').value);
 
                 Backendless.UserService.register(user)
                     .then(function(registeredUser) {
-                        alert("Usuario registrado: " + registeredUser.username);
+                        console.log("Usuario registrado con éxito");
+                        alert("Usuario registrado con éxito: " + registeredUser.getProperty("user"));
                     })
                     .catch(function(error) {
                         console.error("Error al registrar el usuario:", error);
-                        alert("Error al registrar el usuario: " + error.message);
+                        if (error.code === "3033") {
+                            alert("El usuario ya está registrado. Por favor, usa un correo electrónico diferente.");
+                        } else {
+                            alert("Error al registrar el usuario: " + error.message);
+                        }
                     });
             }
 
@@ -48,8 +57,8 @@
         <h1>Registro de Usuario</h1>
         <form id="registerForm">
             <div class="form-group">
-                <label for="username">Nombre de Usuario</label>
-                <input type="text" id="username" required>
+                <label for="user">Nombre de Usuario</label>
+                <input type="text" id="user" required>
             </div>
             <div class="form-group">
                 <label for="email">Correo Electrónico</label>
