@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ranking del Juego</title>
+    <title>Registro de Usuario</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backendless/6.2.1/backendless.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Backendless.initApp("ABADD98B-43DA-4DF4-8822-050BD3F60BB5", "9003D5A0-0023-468C-8861-3AC9EF139C14");
 
-            function enviarPuntuacion() {
-                var playerName = document.getElementById('playerName').value;
-                var score = parseFloat(document.getElementById('score').value);
-                Backendless.Data.of("Gamercu").save({ player_name: playerName, score: score })
-                    .then(function(savedObject) {
-                        alert("Puntuación guardada: " + savedObject.player_name + " - " + savedObject.score);
+            function registrarUsuario() {
+                var username = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+
+                var user = new Backendless.User();
+                user.username = username;
+                user.email = email;
+                user.password = password;
+
+                Backendless.UserService.register(user)
+                    .then(function(registeredUser) {
+                        alert("Usuario registrado: " + registeredUser.username);
                     })
                     .catch(function(error) {
-                        console.error("Error al guardar la puntuación:", error);
-                        alert("Error al guardar la puntuación: " + error.message);
+                        alert("Error al registrar el usuario: " + error.message);
                     });
             }
 
-            document.getElementById('scoreForm').addEventListener('submit', function(e) {
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                enviarPuntuacion();
+                registrarUsuario();
             });
         });
     </script>
 </head>
 <body>
-    <h1>Envía tu Puntuación</h1>
-    <form id="scoreForm">
-        Nombre del Jugador: <input type="text" id="playerName" required><br>
-        Puntuación: <input type="number" id="score" required><br>
-        <button type="submit">Enviar</button>
-    </form>
+    <div class="container">
+        <h1>Registro de Usuario</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="username">Nombre de Usuario</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
 </body>
 </html>
