@@ -10,6 +10,7 @@
         input { width: 100%; padding: 8px; box-sizing: border-box; }
         button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
         button:hover { background-color: #45a049; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backendless/6.2.1/backendless.min.js"></script>
     <script>
@@ -47,6 +48,7 @@
 
             document.getElementById('registerForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+                console.log("Formulario enviado, llamando a registrarUsuario()");
                 registrarUsuario();
             });
         });
@@ -70,6 +72,7 @@
             </div>
             <button type="submit">Registrar</button>
         </form>
+        <pre id="consoleOutput"></pre>
     </div>
 </body>
 </html>
