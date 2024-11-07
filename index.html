@@ -31,6 +31,7 @@
                         alert("Usuario registrado: " + registeredUser.username);
                     })
                     .catch(function(error) {
+                        console.error("Error al registrar el usuario:", error);
                         alert("Error al registrar el usuario: " + error.message);
                     });
             }
