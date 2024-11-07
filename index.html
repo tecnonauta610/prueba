@@ -1,0 +1,808 @@
+<html><head><base href=".">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@latest/dist/email.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnonauta</title>
+<style>
+:root {
+  --primary: #00f7ff;
+  --secondary: #0066ff;
+  --accent: #ff00f2;
+  --dark: #000212;
+  --light: rgba(0, 247, 255, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url('https://i.ibb.co/JQxFVZC/wp14428876.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  background-attachment: fixed !important;
+  position: relative;
+  overflow-x: hidden;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  padding-bottom: 100px; /* Add extra padding at bottom */
+}
+
+.header {
+  background: rgba(0, 2, 18, 0.9);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 1rem 1.5rem; /* Reduce horizontal padding slightly */
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000; /* Increased z-index to ensure visibility */
+  height: 60px; /* Set explicit height */
+  display: flex;
+  justify-content: space-between; /* Changed from center to space-between */
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Reduced gap */
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.copywizard-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.85rem; /* Slightly smaller font */
+  padding: 0.3rem 0.6rem; /* Slightly reduced padding */
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  margin-right: 0.3rem; /* Reduced margin */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.copywizard-button:hover {
+  background: var(--primary);
+  color: var(--dark);
+}
+
+.group-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.85rem; /* Slightly smaller font */
+  padding: 0.3rem 0.6rem; /* Slightly reduced padding */
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  margin-left: 0.3rem; /* Reduced margin */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.group-button:hover {
+  background: var(--primary);
+  color: var(--dark);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+  margin-right: 0.5rem; /* Reduced margin after logo */
+}
+
+.main-content {
+  flex: 1;
+  display: none;
+  padding: 20px;
+  animation: slideIn 0.5s ease;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  padding-top: 80px; /* Increased from 70px to 80px */
+  margin-top: 0;
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Add/modify in the CSS section */
+@keyframes bellShake {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(5deg); }
+  30% { transform: rotate(-5deg); }
+  45% { transform: rotate(4deg); }
+  60% { transform: rotate(-4deg); }
+  75% { transform: rotate(2deg); }
+  85% { transform: rotate(-2deg); }
+  92% { transform: rotate(1deg); }
+  100% { transform: rotate(0); }
+}
+
+.main-content.active {
+  display: block;
+}
+
+.hero {
+  background: rgba(0, 2, 18, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--primary);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px var(--primary);
+}
+
+.hero h1, .hero h2 {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.3rem;
+  margin-bottom: 4rem;
+  padding: 1rem;
+}
+
+.service-card {
+  background: rgba(0, 2, 18, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--primary);
+  color: white;
+  border-radius: 15px;
+  padding: 0.8rem;
+  margin: 0.15rem 0;
+  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.service-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0.3rem 0;
+}
+
+.service-card li {
+  margin: 8px 0;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+#precios .service-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.service-card li:before {
+  content: "▶";
+  color: var(--primary);
+  position: absolute;
+  left: 0;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+  margin-bottom: 1rem;
+}
+
+.contact-form {
+  max-width: 600px;  
+  margin: 2rem auto;
+  padding: 1.5rem;  
+  margin-bottom: 100px; 
+}
+
+.form-group {
+  margin-bottom: 1rem; 
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--primary);
+  text-shadow: 0 0 5px var(--primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem; 
+  font-size: 0.9rem; 
+  background: rgba(0, 2, 18, 0.9); 
+  color: white;
+  border: 1px solid var(--primary);
+}
+
+.form-group input {
+  height: 35px; 
+}
+
+.form-group textarea {
+  height: 80px; 
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--primary);
+  outline: none;
+}
+
+.btn {
+  background: var(--primary);
+  color: var(--dark);
+  text-shadow: none;
+  padding: 0.5rem 1rem; 
+  font-size: 0.9rem; 
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px var(--primary);
+  width: 100%;
+}
+
+.btn:hover {
+  background: var(--accent);
+  box-shadow: 0 0 20px var(--accent);
+}
+
+.footer {
+  background: rgba(0, 2, 18, 0.95); 
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  border-top: 1px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+.nav-button {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  font-size: 0.9rem;
+}
+
+.nav-button:hover {
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.3rem; 
+  margin: 0.5rem 0;
+  margin-bottom: 4rem; 
+}
+
+.feature-item {
+  background: rgba(0, 2, 18, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--primary);
+  color: white;
+  padding: 0.8rem; 
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+  margin: 0.15rem 0;
+}
+
+.feature-item p {
+  font-size: 0.85rem; 
+  line-height: 1.2; 
+  margin-top: 0.3rem;
+}
+
+.feature-item h3 {
+  font-size: 1rem; 
+  margin-bottom: 0.3rem;
+}
+
+.notification-float {
+  position: fixed;
+  top: 70px;
+  right: 25px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(255, 0, 242, 0.5);
+  z-index: 1000;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  animation: bellShake 2s infinite; /* Add shaking animation */
+}
+
+.notification-float:hover {
+  animation: none;  /* Stop shaking on hover */
+  transform: scale(1.1); /* Added scaling effect on hover */
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.notification-dropdown {
+  position: fixed;
+  top: 130px;
+  right: 25px;
+  background: rgba(0, 2, 18, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  padding: 15px;
+  width: 280px;
+  display: none;
+  z-index: 999;
+  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+}
+
+.notification-dropdown.active {
+  display: block;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid var(--primary);
+  margin-bottom: 10px;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.notification-title {
+  color: var(--primary);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-bar {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  
+  .nav-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .feature-item {
+    padding: 0.6rem; 
+    margin: 0.1rem 0;
+  }
+  
+  .feature-item p {
+    font-size: 0.8rem; 
+    line-height: 1.1;
+  }
+  
+  .features-list {
+    margin-bottom: 5rem; 
+  }
+  
+  .service-icon {
+    font-size: 1.8rem; 
+    margin-bottom: 0.4rem;
+  }
+
+  .service-card {
+    padding: 0.6rem; 
+    margin: 0.1rem 0;
+  }
+  
+  .service-card li {
+    font-size: 0.8rem; 
+    line-height: 1.1;
+    margin: 6px 0;
+  }
+
+  .whatsapp-float {
+    bottom: 120px; /* Move even higher on mobile */
+  }
+
+  .header-content {
+    gap: 0.3rem;
+  }
+
+  .logo {
+    margin-right: 0.3rem;
+  }
+  
+  .copywizard-button,
+  .group-button {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.75rem;
+  }
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 100px;  /* Changed from 80px to 100px to move it higher */
+  right: 25px;    /* Slightly adjusted right position */
+  background: #25D366;
+  color: white;
+  border-radius: 50%;  
+  padding: 13px;  /* Adjusted padding to match new size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); /* Enhanced shadow for visibility */
+  z-index: 1000;
+  animation: shake 2s ease-in-out infinite;  /* Added shake animation */
+  transition: all 0.3s ease;
+  width: 50px;    /* Made slightly larger */
+  height: 50px;   /* Made slightly larger */
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-content">
+    <div class="logo">Tecnonauta</div>
+    
+    <a href="https://tecnonauta610.github.io/infoQR/" 
+       target="_blank" 
+       class="copywizard-button">
+      <img src="https://i.ibb.co/qDqf4CN/spy-96975.png" 
+           alt="spy icon" 
+           width="16" 
+           height="16" 
+           style="filter: invert(1);">
+      CopyWizard
+    </a>
+    
+    <a href="https://chat.whatsapp.com/HiTwQdsibfYKpbLqmYOs7D" 
+       target="_blank" 
+       class="group-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+      </svg>
+      Grupo
+    </a>
+  </div>
+</header>
+
+<section id="inicio" class="main-content active">
+  <div class="hero">
+    <h1>Experto en Instalación de Sistemas Operativos Windows</h1>
+    <h2> Experto En Desbloqueo de Celulares Contraseñas y Cuenta De Google</h2>
+    
+    <svg width="200" height="200" viewBox="0 0 200 200" style="margin: 20px auto;">
+      <defs>
+        <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--accent);stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <g transform="translate(100 100)">
+        <!-- Laptop Base -->
+        <rect x="-60" y="-20" width="120" height="80" rx="5" fill="url(#techGradient)" opacity="0.9" stroke="var(--primary)" stroke-width="2">
+          <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        
+        <!-- Laptop Screen -->
+        <rect x="-50" y="-70" width="100" height="60" rx="5" fill="rgba(0,2,18,0.9)" stroke="var(--primary)" stroke-width="2">
+          <animate attributeName="y" values="-70;-65;-70" dur="3s" repeatCount="indefinite"/>
+        </rect>
+        
+        <!-- Windows Logo -->
+        <g transform="translate(-25 -45) scale(0.4)">
+          <rect x="0" y="0" width="20" height="20" fill="var(--primary)"/>
+          <rect x="25" y="0" width="20" height="20" fill="var(--primary)"/>
+          <rect x="0" y="25" width="20" height="20" fill="var(--primary)"/>
+          <rect x="25" y="25" width="20" height="20" fill="var(--primary)">
+            <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+          </rect>
+        </g>
+        
+        <!-- Android Logo -->
+        <g transform="translate(20 -45) scale(0.3)">
+          <circle cx="0" cy="0" r="20" fill="var(--accent)"/>
+          <path d="M-15,-5 L15,-5 M-10,-15 L-10,-5 M10,-15 L10,-5 M-15,5 Q0,20 15,5" 
+                stroke="var(--dark)" 
+                stroke-width="3" 
+                fill="none">
+            <animate attributeName="stroke-dasharray" values="1;5;1" dur="3s" repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>
+    </svg>
+  </div>
+  
+  <div class="features-list">
+    <div class="feature-item">
+      <div class="service-icon">💻</div>
+      <h3>Especialistas en Sistemas Operativos</h3>
+      <p>Instalación y configuración experta de Windows, drivers, y software</p>
+    </div>
+    <div class="feature-item">
+      <div class="service-icon">📱</div>
+      <h3>Servicios Android</h3>
+      <p>Eliminación FRP, desbloqueo de cuentas y más</p>
+    </div>
+    <div class="feature-item">
+      <div class="service-icon">🔄</div>
+      <h3>Soluciones Completas</h3>
+      <p>Todo lo que necesitas para mantener tus dispositivos funcionando perfectamente</p>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" class="main-content">
+  <div class="hero">
+    <h2>Nuestros Servicios Especializados</h2>
+    <p>Los mejores precios del mercado</p>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <h3>Servicios Windows</h3>
+      <ul>
+        <li>Instalación de sistema operativo</li>
+        <li>Desbloqueo de contraseñas sin Formatear</li>
+        <li>Instalación de antivirus y paquetes office</li>
+        <li>Instalación de drivers</li>
+      </ul>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Servicios Android</h3>
+      <ul>
+        <li>Eliminación FRP y Cuentas Google</li>
+        <li>Desbloqueo de contraseñas de pantalla</li>
+        <li>Instalación de APK</li>
+        <li>Creación de cuentas Google</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="precios" class="main-content">
+  <div class="hero">
+    <h2>Lista de Precios</h2>
+    <p>Precios competitivos para todos nuestros servicios</p>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💾</div>
+      <h3>Servicios y Tarifas</h3>
+      <ul>
+        <li>📀 Grabación de memorias: 1 CUP por ficheros</li>
+        <li>💻 Instalación sistema operativo Windows: 800 CUP</li>
+        <li>🔐 Recuperación de contraseñas Windows (sin reinstalar): 500 CUP</li>
+        <li>📱 FRP cuentas Google: 700 CUP</li>
+        <li>🛡️ Instalación Antivirus: 200 CUP</li>
+        <li>📊 Instalación paquete Office: 300 CUP</li>
+        <li>📦 Paquete Semanal: 200 CUP</li>
+        <li>🕹 Pirateria Ps3: 600cup si no tienen Cable tv y es hdmei Les hago el Domicilio</li> 
+        <li>🕹Porateria Ps2: 500cup deves traer una memori Card que ya este pirateada</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="main-content">
+  <div class="hero">
+    <h2>Contacta con Nosotros</h2>
+    <p>Estamos listos para ayudarte</p>
+  </div>
+  
+  <form class="contact-form" id="contactForm">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" id="name" required placeholder="Tu nombre">
+    </div>
+    
+    <div class="form-group">
+      <label for="subject">Asunto</label>
+      <input type="text" id="subject" required placeholder="Asunto de tu mensaje">
+    </div>
+    
+    <div class="form-group">
+      <label for="message">Comentario o Duda</label>
+      <textarea id="message" rows="5" required placeholder="Describe tu consulta o duda"></textarea>
+    </div>
+    
+    <button type="button" class="btn" onclick="sendEmail()">Enviar Mensaje</button>
+  </form>
+</section>
+
+<a href="https://wa.me/+5356639178?text=Me%20interesa%20sus%20servicios" 
+   target="_blank" 
+   class="whatsapp-float">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+  </svg>
+</a>
+
+<div class="notification-float" onclick="toggleNotifications()">
+  <div class="notification-badge">1</div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+  </svg>
+</div>
+
+<div class="notification-dropdown">
+    <div class="notification-item">
+      <div class="notification-title">¡Nuevo Servicio!</div>
+      <p>Pirateria  Instalación De Free McBoot A PlayStation 2 y Instalación De Hen A PlayStation 3 Ver mis Precios en el apartado De Precios</p>
+        <h2>oferta especial🔥</h2>
+         Rebaja en El Servicio De Llenado de Memorias a 1cup x fichero Copido Hast Que se Resuelva lo De la Corriente
+  
+      
+    </div>
+    
+</div>
+
+<footer class="footer">
+  <nav class="nav-bar">
+    <a class="nav-button" onclick="showSection('inicio')">Inicio</a>
+    <a class="nav-button" onclick="showSection('servicios')">Servicios</a>
+    <a class="nav-button" onclick="showSection('precios')">Precios</a>
+    <a class="nav-button" onclick="showSection('contacto')">Contacto</a>
+  </nav>
+  <div class="copyright">© 2024 Tecnonauta. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+function showSection(sectionId) {
+  document.querySelectorAll('.main-content').forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  document.getElementById(sectionId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+(function() {
+  emailjs.init("mFH-Tziqc62kok1kS");
+})();
+
+function detectDevice() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  if (/android/i.test(userAgent)) return "Android";
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
+  if (/Windows NT/.test(userAgent)) return "Windows";
+  if (/Macintosh/.test(userAgent)) return "MacOS";
+  return "Desconocido";
+}
+
+function sendEmail() {
+  var name = document.getElementById('name').value;
+  var subject = document.getElementById('subject').value;
+  var message = document.getElementById('message').value;
+  var device = detectDevice();
+
+  var templateParams = {
+    from_name: name,
+    subject: subject,
+    message: message,
+    device: device
+  };
+
+  emailjs.send('service_o93oawf', 'template_tqsfh3p', templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      alert('¡Gracias por contactarnos! Nos pondremos en contacto pronto.');
+      document.getElementById('contactForm').reset();
+    }, function(error) {
+      console.log('FAILED...', error);
+      alert('Error al enviar el mensaje: ' + JSON.stringify(error));
+    });
+}
+
+// Add to script section
+function toggleNotifications() {
+  const dropdown = document.querySelector('.notification-dropdown');
+  dropdown.classList.toggle('active');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const dropdown = document.querySelector('.notification-dropdown');
+  const notificationFloat = document.querySelector('.notification-float');
+  
+  if (!dropdown.contains(event.target) && !notificationFloat.contains(event.target)) {
+    dropdown.classList.remove('active');
+  }
+});
+
+// Keep the existing navigation function
+</script>
+
+</body>
+</html>
